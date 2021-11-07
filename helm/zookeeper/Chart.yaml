@@ -1,0 +1,9 @@
+apiVersion: v2
+name: zookeeper
+description: A Helm chart for zookeeper to use with the solr
+type: application
+version: 1.0.0
+appVersion: "1.16.0"
+sources:
+  - https://github.com/apache/zookeeper
+  - https://github.com/kubernetes/contrib/tree/master/statefulsets/zookeeper

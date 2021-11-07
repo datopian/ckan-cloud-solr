@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: deploy-solr-config
+spec:
+  template:
+    spec:
+      containers:
+        - name: solr-config
+          image: alpine:3.14
+          command: ["/bin/sh", "/config-scripts/startup.sh"]
+        #   args: ["while true; do sleep 30; done;"]
+          volumeMounts:
+            - mountPath: /config-scripts/
+              name: solr-deploy-script
+              readOnly: true
+          env:
+            - name: "SOLR_RELEASE_NAME"
+              value: "{{ .Release.Name }}"
+            - name: "SOLR_NAMESPACE_NAME"
+              value: "{{ .Release.Namespace }}"
+            - name: "SOLR_PORT"
+              value: "{{ .Values.port }}"
+            - name: "REPLICA_COUNT"
+              value: "{{ .Values.replicaCount }}"
+            - name: "ZK_HOST"
+              value: "{{ include "solr.zookeeper-name" . }}"
+            - name: "SOLR_DEFAULT_CONFIG_DIRECTORY_URL"
+              value: "{{ .Values.ckan.solr_config_directory_url }}"
+            - name: "SOLR_DEFAULT_CONFIG"
+              value: "{{ .Values.ckan.solr_config }}"
+      restartPolicy: Never
+      volumes: 
+        - name: solr-deploy-script
+          configMap:
+            name: solr-deploy-script
+  backoffLimit: 0

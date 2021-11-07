@@ -1,0 +1,22 @@
+name: Build and Push Docker CI
+
+on:
+  push:
+    branches: [master]
+    tags:
+      - "v*.*.*"
+jobs:
+  build:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: make build SOLR_IMAGE=${{ secrets.SOLR_IMAGE }}
+      - name: Docker push
+        run: docker push ${{ secrets.SOLR_IMAGE }}

@@ -1,0 +1,90 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "solr-deploy-script"
+  labels:
+{{ include "solr.common.labels" . | indent 4}}
+data:
+  install_core.py: |
+    #!/usr/bin/env python3
+    import requests
+    import os, time
+
+
+    def get_env_var(key):
+        return os.environ[key]
+
+    DEFAULT_CORE_NAME = get_env_var('SOLR_RELEASE_NAME')
+
+
+    def solr_base_url():
+        SOLR_RELEASE_NAME = get_env_var('SOLR_RELEASE_NAME')
+        SOLR_PORT = get_env_var('SOLR_PORT')
+        url = f"http://{SOLR_RELEASE_NAME}-svc:{SOLR_PORT}"
+        return url
+
+    def check_solr_up():
+        print("Check if solr is up and all solr replicas are started")
+        try:
+            base_url = solr_base_url()
+            url = f"{base_url}/solr/admin/collections?action=clusterstatus&wt=json"
+            res = requests.get(url)
+            if res.status_code == 200:
+                res_data = res.json()
+                if len(res_data.get('cluster').get('live_nodes')) == int(get_env_var('REPLICA_COUNT')):
+                    return True
+                else:
+                    print("Solr is not up yet, so waiting 60 more seconds")
+                    time.sleep(60)
+                    check_solr_up()
+        except Exception as e:
+            print(e)
+            pass
+
+    def install_config(config_name='ckan_default_28'):
+        print(f"Installing config {config_name}")
+        response = requests.get('https://filebin.net/uqnpm868qo2zy284/ckan_default_2.8.zip')
+        data= response.content
+        base_url = solr_base_url()
+        url = f"{base_url}/solr/admin/configs?action=UPLOAD&name={config_name}&wt=json"
+        res = requests.post(url=url,
+                            data=data,
+                            headers={'Content-Type': 'application/octet-stream'})
+
+
+    def install_core(name=DEFAULT_CORE_NAME):
+        base_url = solr_base_url()
+        url = f"{base_url}/solr/admin/collections?action=CREATE&name={name}&collection.configName=ckan_default_28&replicationFactor=3&numShards=1&wt=json"
+        res = requests.get(url=url,
+                            headers={'Content-Type': 'application/octet-stream'})
+
+    if __name__ == "__main__":
+        if check_solr_up() == True:
+            install_config()
+            install_core()
+
+  startup.sh: |
+    #!/bin/bash
+    # Install Dependencies
+    echo "Installing OS Dependencies"
+    apk add vim git python3 py3-pip 
+    pip install requests
+
+    echo "Validate and Install the CKAN Core"
+    sleep 240
+    while true  
+    do  
+        echo "Check zookeeper is up and running"  
+        echo "ruok" | nc ${ZK_HOST} 2181
+        status=$?
+        if [[ $status -eq '0' ]]; then
+            echo "Yes! It is running"
+            echo "Install Config and Core"
+            python3 /config-scripts/install_core.py 
+            break
+        else
+            echo "No zookeeper is not up and running, please wait"
+        fi
+        sleep 60
+    done
+        
