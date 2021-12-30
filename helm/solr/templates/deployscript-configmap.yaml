@@ -71,7 +71,7 @@ data:
     pip install requests
 
     echo "Validate and Install the CKAN Core"
-    sleep 240
+    sleep 400
     while true
     do
         echo "Check zookeeper is up and running"
