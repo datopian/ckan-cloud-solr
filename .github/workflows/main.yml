@@ -32,7 +32,7 @@ jobs:
       run: |
         cd charts
         helm package ../helm/solr --version "${VERSION}"
-        helm repo index --url https://raw.githubusercontent.com/datopian/ckan-cloud-solr/master/charts/ .
+        helm repo index --url https://raw.githubusercontent.com/datopian/ckan-cloud-solr/main/charts/ .
         TEMPDIR=`mktemp -d`
         git clone https://github.com/datopian/ckan-cloud-solr ${TEMPDIR}
         cp solr-${VERSION}.tgz $TEMPDIR/charts/solr-${VERSION}.tgz
