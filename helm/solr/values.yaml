@@ -61,7 +61,7 @@ readinessProbe:
 # Annotations to apply to the solr pods
 podAnnotations: {}
 
-nodeSelector: { node_pool: custom-node-solr } # Node label-values required to run solr pods.
+nodeSelector: {} # Node label-values required to run solr pods.
 
 # Affinity group rules or the solr pods
 affinity: {}
