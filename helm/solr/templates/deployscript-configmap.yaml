@@ -43,7 +43,7 @@ data:
 
     def install_config(config_name='ckan_default_28'):
         print(f"Installing config {config_name}")
-        response = requests.get('https://filebin.net/0448gbkj0tir8epx/ckan_default_2.8.zip')
+        response = requests.get('https://github.com/datopian/ckan-cloud-solr/blob/main/solr_configs/ckan_default_2.8.zip?raw=true')
         data= response.content
         base_url = solr_base_url()
         url = f"{base_url}/solr/admin/configs?action=UPLOAD&name={config_name}&wt=json"
@@ -67,24 +67,23 @@ data:
     #!/bin/bash
     # Install Dependencies
     echo "Installing OS Dependencies"
-    apk add vim git python3 py3-pip 
+    apk add vim git python3 py3-pip
     pip install requests
 
     echo "Validate and Install the CKAN Core"
     sleep 240
-    while true  
-    do  
-        echo "Check zookeeper is up and running"  
+    while true
+    do
+        echo "Check zookeeper is up and running"
         echo "ruok" | nc ${ZK_HOST} 2181
         status=$?
         if [[ $status -eq '0' ]]; then
             echo "Yes! It is running"
             echo "Install Config and Core"
-            python3 /config-scripts/install_core.py 
+            python3 /config-scripts/install_core.py
             break
         else
             echo "No zookeeper is not up and running, please wait"
         fi
         sleep 60
     done
-        
