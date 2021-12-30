@@ -1,0 +1,48 @@
+name: Continuous Deployment
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  CICD:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.3.1
+    - name: Setup env variables
+      uses: FranzDiebold/github-env-vars-action@v2
+    - name: Install Helm
+      env:
+        HELM_VERSION: v3.6.3
+      run: |
+        curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+        chmod 700 get_helm.sh
+        ./get_helm.sh --version "${HELM_VERSION}"
+        helm version --client && rm ./get_helm.sh
+    - name: Get the tag name
+      env:
+        GITHUB_REF: ${{ env.GITHUB_REF }}
+      run: echo "VERSION=${GITHUB_REF/refs\/*\//}" >> $GITHUB_ENV
+    - name: Deploy
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        cd charts
+        helm package ../solr --version "${VERSION}"
+        helm repo index --url https://raw.githubusercontent.com/datopian/ckan-cloud-solr/master/charts/ .
+        TEMPDIR=`mktemp -d`
+        git clone https://github.com/datopian/ckan-cloud-solr ${TEMPDIR}
+        cp solr-${VERSION}.tgz $TEMPDIR/charts/solr-${VERSION}.tgz
+        cp index.yaml $TEMPDIR/charts/index.yaml
+        cd ${TEMPDIR}
+        git config --global user.email "irakli.mchedlishvili@datopian.com"
+        git config --global user.name "zelima"
+        git remote set-url --push origin https://zelima:$GITHUB_TOKEN@github.com/datopian/ckan-cloud-solr
+        git status
+        git branch
+        git add charts/index.yaml charts/solr-${VERSION}.tgz
+        git commit -m"upgrade helm chart repo to CKAN chart${VERSION}"
+        git push origin master
