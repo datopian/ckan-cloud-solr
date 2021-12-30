@@ -20,7 +20,7 @@ data:
     def solr_base_url():
         SOLR_RELEASE_NAME = get_env_var('SOLR_RELEASE_NAME')
         SOLR_PORT = get_env_var('SOLR_PORT')
-        url = f"http://{SOLR_RELEASE_NAME}-svc:{SOLR_PORT}"
+        url = f"http://{SOLR_RELEASE_NAME}-solr-svc:{SOLR_PORT}"
         return url
 
     def check_solr_up():
