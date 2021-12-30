@@ -3,7 +3,7 @@ entries:
   solr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-30T16:16:07.821602006Z"
+    created: "2021-12-30T16:53:48.0772976Z"
     dependencies:
     - name: zookeeper
       repository: file://../zookeeper
@@ -22,7 +22,26 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-30T16:16:07.831348979Z"
+    created: "2021-12-30T16:53:48.093802829Z"
+    dependencies:
+    - name: zookeeper
+      repository: file://../zookeeper
+      version: 1.0.0
+    description: 'A helm chart to install Apache Solr: http://lucene.apache.org/solr/'
+    digest: 041d3f3cded6095a30aba4b4264de5186c96e915526456d32abf79903d1154fd
+    home: http://lucene.apache.org/solr/
+    keywords:
+    - solr
+    name: solr
+    sources:
+    - https://gitbox.apache.org/repos/asf?p=lucene-solr.git
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/datopian/ckan-cloud-solr/main/charts/solr-v0.0.7.tgz
+    version: v0.0.7
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-12-30T16:53:48.090826906Z"
     dependencies:
     - name: zookeeper
       repository: file://../zookeeper
@@ -41,7 +60,26 @@ entries:
     version: v0.0.6
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-30T16:16:07.828727944Z"
+    created: "2021-12-30T16:53:48.088185685Z"
+    dependencies:
+    - name: zookeeper
+      repository: file://../zookeeper
+      version: 1.0.0
+    description: 'A helm chart to install Apache Solr: http://lucene.apache.org/solr/'
+    digest: c450393e19179c2ccbe408ca7377c26bd174d3e63c4eb3b9e75d7d2437332197
+    home: http://lucene.apache.org/solr/
+    keywords:
+    - solr
+    name: solr
+    sources:
+    - https://gitbox.apache.org/repos/asf?p=lucene-solr.git
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/datopian/ckan-cloud-solr/main/charts/solr-v0.0.5.tgz
+    version: v0.0.5
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-12-30T16:53:48.085521164Z"
     dependencies:
     - name: zookeeper
       repository: file://../zookeeper
@@ -60,7 +98,7 @@ entries:
     version: v0.0.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-30T16:16:07.826169315Z"
+    created: "2021-12-30T16:53:48.080040421Z"
     dependencies:
     - name: zookeeper
       repository: file://../zookeeper
@@ -77,4 +115,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/datopian/ckan-cloud-solr/main/charts/solr-v0.0.3.tgz
     version: v0.0.3
-generated: "2021-12-30T16:16:07.818668843Z"
+generated: "2021-12-30T16:53:48.074079374Z"
