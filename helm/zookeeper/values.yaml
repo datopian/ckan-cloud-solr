@@ -70,7 +70,7 @@ resources:
 
 priorityClassName: ""
 
-nodeSelector: {} # Node label-values required to run zookeeper pods.
+nodeSelector: { node_pool: custom-node-solr } # Node label-values required to run zookeeper pods.
 
 tolerations: [] # Node taint overrides for zookeeper pods.
 
@@ -285,6 +285,7 @@ env:
   ZOO_AUTOPURGE_PURGEINTERVAL: 0
   ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
   ZOO_STANDALONE_ENABLED: false
+  ZK_BUFFER_SIZE: 50000000
 
 jobs:
   ## ref: http://zookeeper.apache.org/doc/r3.4.10/zookeeperProgrammers.html#ch_zkSessions

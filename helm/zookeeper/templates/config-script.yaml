@@ -26,6 +26,7 @@ data:
 
       ZK_USER=${ZK_USER:-"zookeeper"}
       ZK_LOG_LEVEL=${ZK_LOG_LEVEL:-"INFO"}
+      ZK_BUFFER_SIZE=${ZK_BUFFER_SIZE:-"50000000"}
       ZK_DATA_DIR=${ZK_DATA_DIR:-"/data"}
       ZK_DATA_LOG_DIR=${ZK_DATA_LOG_DIR:-"/data/log"}
       ZK_CONF_DIR=${ZK_CONF_DIR:-"/conf"}
@@ -107,4 +108,4 @@ data:
       fi
 
       set -x
-      exec java -cp "$CLASSPATH" $JVMFLAGS $MAIN $ZK_CONFIG_FILE
+      exec java -cp "$CLASSPATH" $JVMFLAGS -Djute.maxbuffer=$ZK_BUFFER_SIZE $MAIN $ZK_CONFIG_FILE

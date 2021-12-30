@@ -43,7 +43,7 @@ data:
 
     def install_config(config_name='ckan_default_28'):
         print(f"Installing config {config_name}")
-        response = requests.get('https://filebin.net/uqnpm868qo2zy284/ckan_default_2.8.zip')
+        response = requests.get('https://filebin.net/0448gbkj0tir8epx/ckan_default_2.8.zip')
         data= response.content
         base_url = solr_base_url()
         url = f"{base_url}/solr/admin/configs?action=UPLOAD&name={config_name}&wt=json"

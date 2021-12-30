@@ -14,10 +14,16 @@ port: 8983
 replicaCount: 3
 
 # Settings for solr java memory
-javaMem: "-Xms2g -Xmx3g"
+javaMem: "-Xms3g -Xmx4g"
 
 # Set the limits and requests on solr pod resources
-resources: {}
+resources:
+  limits:
+    memory: 6G
+    cpu: 1500m
+  requests:
+    memory: 4G
+    cpu: 1000m
 
 # Extra environment variables - allows yaml definitions
 extraEnvVars: []
@@ -55,6 +61,8 @@ readinessProbe:
 # Annotations to apply to the solr pods
 podAnnotations: {}
 
+nodeSelector: { node_pool: custom-node-solr } # Node label-values required to run solr pods.
+
 # Affinity group rules or the solr pods
 affinity: {}
 
@@ -80,7 +88,7 @@ podDisruptionBudget:
 # Configuration for the solr PVC
 volumeClaimTemplates:
   storageClassName: ""
-  storageSize: "2Gi"
+  storageSize: "20Gi"
   accessModes:
     - "ReadWriteOnce"
 
@@ -135,3 +143,4 @@ exporter:
 ckan:
   solr_config_directory_url: "/opt/solr/contrib/"
   solr_config: "ckan_default_2.8.zip"
+  custom_config: false

@@ -9,7 +9,6 @@ spec:
         - name: solr-config
           image: alpine:3.14
           command: ["/bin/sh", "/config-scripts/startup.sh"]
-        #   args: ["while true; do sleep 30; done;"]
           volumeMounts:
             - mountPath: /config-scripts/
               name: solr-deploy-script
@@ -25,9 +24,9 @@ spec:
               value: "{{ .Values.replicaCount }}"
             - name: "ZK_HOST"
               value: "{{ include "solr.zookeeper-name" . }}"
-            - name: "SOLR_DEFAULT_CONFIG_DIRECTORY_URL"
+            - name: "SOLR_CONFIG_DIRECTORY_URL"
               value: "{{ .Values.ckan.solr_config_directory_url }}"
-            - name: "SOLR_DEFAULT_CONFIG"
+            - name: "SOLR_CONFIG"
               value: "{{ .Values.ckan.solr_config }}"
       restartPolicy: Never
       volumes: 

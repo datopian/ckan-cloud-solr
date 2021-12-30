@@ -12,15 +12,6 @@ The chart installs the Solr docker image from: https://hub.docker.com/_/solr/
 - The zookeeper incubator helm chart
 - Tested on kubernetes 1.10+
 
-## Installation
-
-To install the Solr helm chart run:
-
-```txt
-helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-helm install --name solr incubator/solr
-```
-
 ## Configuration Options
 
 The following table shows the configuration options for the Solr helm chart:
@@ -81,14 +72,9 @@ The following table shows the configuration options for the Solr helm chart:
 | `exporter.service.type`                       | The type of the exporter service | `ClusterIP`                                                           |
 | `exporter.service.annotations`                | Annotations to apply to the exporter service | `{}` |
 | `ckan.solr_config_directory_url`              | The link to directory containing default configuration for different CKAN versions | `https://github.com/shubham-mahajan/ckan-cloud-solr/blob/master/solr_configs/` |
-| `ckan.solr_config_directory_url`              | The link to directory containing default configuration for different CKAN versions | `https://github.com/shubham-mahajan/ckan-cloud-solr/blob/master/solr_configs/` |
-
-## Service Start with command sets
-
-```sh
-helm install --name solr \
-    --set image.tag=7.7.2,javaMem="-Xms1g -Xmx1g",logLevel=INFO,replicaCount=2,livenessProbe.initialDelaySeconds=420,exporter.readinessProbe.periodSeconds=30 incubator/solr
-```
+| `ckan.solr_config`                            | The default config for the ckan solr  | `ckan_default_2.8.zip` |
+| `ckan.custom_config`                          | If the configuration is custom config | `false` |
+| `ckan.custom_config_path`                     | Path to the zip of the configuration  |         |
 
 ## TLS Configuration
 

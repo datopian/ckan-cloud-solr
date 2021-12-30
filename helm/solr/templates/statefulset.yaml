@@ -33,6 +33,10 @@ spec:
       securityContext:
         fsGroup: 8983
         runAsUser: 8983
+  {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
       affinity:
 {{ tpl (toYaml .Values.affinity) .  | indent 8 }}
       tolerations:
