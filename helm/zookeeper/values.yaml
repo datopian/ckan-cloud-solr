@@ -70,7 +70,7 @@ resources:
 
 priorityClassName: ""
 
-nodeSelector: { node_pool: custom-node-solr } # Node label-values required to run zookeeper pods.
+nodeSelector: {} # Node label-values required to run zookeeper pods.
 
 tolerations: [] # Node taint overrides for zookeeper pods.
 
