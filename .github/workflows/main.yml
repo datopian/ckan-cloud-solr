@@ -31,7 +31,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       run: |
         cd charts
-        helm package ../solr --version "${VERSION}"
+        helm package ../helm/solr --version "${VERSION}"
         helm repo index --url https://raw.githubusercontent.com/datopian/ckan-cloud-solr/master/charts/ .
         TEMPDIR=`mktemp -d`
         git clone https://github.com/datopian/ckan-cloud-solr ${TEMPDIR}
