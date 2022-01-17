@@ -9,4 +9,4 @@ The repo is possible due to the following repositories only. Thanks to all the c
 
 # Contributors
 
-<a href="https://github.com/shubham-mahajan/ckan-cloud-solr/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=shubham-mahajan/ckan-cloud-solr" /></a>
+<a href="https://github.com/datopian/ckan-cloud-solr/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=datopian/ckan-cloud-solr" /></a>
