@@ -11,5 +11,5 @@ sources:
   - "https://gitbox.apache.org/repos/asf?p=lucene-solr.git"
 dependencies:
   - name: zookeeper
-    version: "1.0.0"
+    version: "1.1.0"
     repository: "file://../zookeeper"
